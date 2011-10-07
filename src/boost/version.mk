@@ -1,0 +1,3 @@
+NAME    = boost
+VERSION = 1.47.0
+RELEASE = 1
