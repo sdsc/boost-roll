@@ -65,7 +65,7 @@ build:
 	tar xvf $(SOURCE).tar.gz
 	( \
             cd $(SOURCE); \
-            ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) \
+            ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT); \
             ./b2 \
         )
 
