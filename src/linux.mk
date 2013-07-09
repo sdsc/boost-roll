@@ -56,6 +56,6 @@
 
 SRCDIRS = `find . -maxdepth 1 -type d \
 	-not -name CVS \
-        -not -name boost
-        -not -name boost-modules
+        -not -name boost \
+        -not -name boost-modules \
 	-not -name .` boost boost-modules
