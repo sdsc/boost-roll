@@ -1,0 +1,4 @@
+NAME    = boost_$(ROLLCOMPILER)
+VERSION = 1.54.0
+RELEASE = 1
+RPM.EXTRAS = "AutoReq: no"
