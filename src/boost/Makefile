@@ -91,7 +91,7 @@ build:
          )
 
 install::
-	mkdir $(REDHAT.ROOT)/src/build-boost-modules
+	mkdir -p $(REDHAT.ROOT)/src/build-boost-modules
 	( \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
