@@ -85,6 +85,11 @@ build:
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
 	tar zxvf $(SOURCE).tar.gz
 	( \
+          if test $(ROLLCOMPILER) = "pgi"; then \
+              make clean; \
+              rm -rf $(ROOT)/$(PKGROOT); \
+              exit; \
+          fi; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
           ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET); \
@@ -93,6 +98,11 @@ build:
 install::
 	mkdir -p $(REDHAT.ROOT)/src/build-boost-modules
 	( \
+          if test $(ROLLCOMPILER) = "pgi"; then \
+              make clean; \
+              rm -rf $(ROOT)/$(PKGROOT); \
+              exit; \
+          fi; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
           ./b2 install \
