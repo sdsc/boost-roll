@@ -3,7 +3,7 @@
 
 cat > ROOT_PKGROOTMODULEROOT/VERSION <<END
 #%Module1.0
-module-whatis "boost_ROLLCOMPILER
+module-whatis "boost_ROLLCOMPILER"
 module-whatis "Version: VERSION"
 prepend-path LD_LIBRARY_PATH /opt/boost/ROLLCOMPILER/lib
 setenv BOOSTHOME /opt/boost/ROLLCOMPILER
