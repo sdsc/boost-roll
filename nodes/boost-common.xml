@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+<description>
+http://www.boost.org
+</description>
+
+<copyright>
+</copyright>
+
+<changelog>
+</changelog>
+
+<package>boost</package>
+<package>boost-modules</package>
+
+</kickstart>
