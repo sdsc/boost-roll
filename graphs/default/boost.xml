@@ -15,10 +15,10 @@ All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
 </changelog>
 
 <edge from="base">
-  <to>boost-install</to>
+  <to>boost-common</to>
 </edge>
 <order head="common">
-  <tail>boost-install</tail>
+  <tail>boost-common</tail>
 </order>
 
 </graph>
