@@ -12,7 +12,8 @@ http://www.boost.org
 <changelog>
 </changelog>
 
-<package>boost</package>
+<package>boost_ROLLCOMPILER</package>
 <package>boost-modules</package>
+<package>boost-roll-test</package>
 
 </kickstart>
