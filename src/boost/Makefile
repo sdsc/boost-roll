@@ -59,11 +59,12 @@ ifndef ROLLCOMPILER
 endif
 
 PKGROOT = /opt/boost/$(ROLLCOMPILER)
-SOURCE = boost-$(VERSION)
+SOURCE = $(BOOST_NAME)-$(BOOST_VERSION)
 REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 
 -include $(ROCKSROOT)/etc/Rules.mk
+include pull.mk
 
 COMPILERSETUP = \
   if test -e /etc/profile.d/modules.sh; then \
@@ -81,7 +82,7 @@ endif
 
 
 
-build:
+build: $(SRC_DIRS)
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
 	tar zxvf $(SOURCE).tar.gz
 	( \
