@@ -44,11 +44,17 @@ builds using the gnu compilers.  To build for a different configuration, use
 the `ROLLCOMPILER` make variable, e.g.,
 
 ```shell
-make ROLLCOMPILER=intel
+% make ROLLCOMPILER=intel
 ```
 
 The build process currently supports one or more of the values "intel", "pgi",
-and "gnu" for the `ROLLCOMPILER` variable, defaulting to "gnu".
+and "gnu" for the `ROLLCOMPILER` variable, defaulting to "gnu".  The build
+process uses the ROLLCOMPILER value to load an environment module, so you can
+also use it to specify a particular compiler version, e.g.,
+
+```shell
+% make ROLLCOMPILER=gnu/4.8.1
+```
 
 The `ROLLCOMPILER` value is incorporated into the name of the produced rpm, e.g.,
 
