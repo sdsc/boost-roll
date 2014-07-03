@@ -65,6 +65,11 @@ include pull.mk
 COMPILERSETUP = \
   if test -e /etc/profile.d/modules.sh; then \
     . /etc/profile.d/modules.sh; \
+    module=`module avail 2>&1 | grep -o "\<$(ROLLCOMPILER)\>"`; \
+    if test "$${module}" != "$(ROLLCOMPILER)"; then \
+      echo *** ERROR: Compiler $(ROLLCOMPILER) not found; \
+      exit 2; \
+    fi; \
     module load $(ROLLCOMPILER); \
   fi
 
@@ -79,23 +84,13 @@ build: $(SRC_DIRS)
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
 	tar zxvf $(SOURCE).tar.gz
 	( \
-          if test $(COMPILERNAME) = "pgi"; then \
-              make clean; \
-              rm -rf $(ROOT)/$(PKGROOT); \
-              exit; \
-          fi; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
-          ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET) \
-         )
+	  ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET) \
+	)
 
 install::
 	( \
-          if test $(COMPILERNAME) = "pgi"; then \
-              make clean; \
-              rm -rf $(ROOT)/$(PKGROOT); \
-              exit; \
-          fi; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
 	  ./b2 install \
