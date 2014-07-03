@@ -1,4 +1,10 @@
-NAME    = boost_$(ROLLCOMPILER)
+ifndef ROLLCOMPILER
+  COMPILERNAME = gnu
+else
+  COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
+endif
+
+NAME    := boost_$(COMPILERNAME)
 VERSION = 1.54.0
 RELEASE = 1
 RPM.EXTRAS = "AutoReq: no"

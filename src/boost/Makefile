@@ -54,11 +54,7 @@
 # @Copyright@
 
 
-ifndef ROLLCOMPILER
-  ROLLCOMPILER = gnu
-endif
-
-PKGROOT = /opt/boost/$(ROLLCOMPILER)
+PKGROOT = /opt/boost/$(COMPILERNAME)
 SOURCE = $(BOOST_NAME)-$(BOOST_VERSION)
 REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
@@ -69,47 +65,41 @@ include pull.mk
 COMPILERSETUP = \
   if test -e /etc/profile.d/modules.sh; then \
     . /etc/profile.d/modules.sh; \
-    latestModule=`module avail 2>&1 | grep -o '$(ROLLCOMPILER)/[^ (]*' | sed 's/$(ROLLCOMPILER).//' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1`; \
-    module load $(ROLLCOMPILER)/$${latestModule}; \
+    module load $(ROLLCOMPILER); \
   fi
 
 TOOLSET = gcc
-ifeq ("$(ROLLCOMPILER)", "intel")
+ifeq ("$(COMPILERNAME)", "intel")
    TOOLSET = intel-linux
-else ifeq ("$(ROLLCOMPILER)", "pgi")
+else ifeq ("$(COMPILERNAME)", "pgi")
    TOOLSET = pgi
 endif
-
-
 
 build: $(SRC_DIRS)
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
 	tar zxvf $(SOURCE).tar.gz
 	( \
-          if test $(ROLLCOMPILER) = "pgi"; then \
+          if test $(COMPILERNAME) = "pgi"; then \
               make clean; \
               rm -rf $(ROOT)/$(PKGROOT); \
               exit; \
           fi; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
-          ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET); \
+          ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET) \
          )
 
 install::
-	mkdir -p $(REDHAT.ROOT)/src/build-boost-modules
 	( \
-          if test $(ROLLCOMPILER) = "pgi"; then \
+          if test $(COMPILERNAME) = "pgi"; then \
               make clean; \
               rm -rf $(ROOT)/$(PKGROOT); \
               exit; \
           fi; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
-          ./b2 install \
+	  ./b2 install \
 	)
-	cat boost.module | perl -pi -e "s!MODULEROOT!/opt/modulefiles/applications/.$(ROLLCOMPILER)/boost!g;s!VERSION!$(VERSION)!g;s!ROLLCOMPILER!$(ROLLCOMPILER)!g" \
-	  > $(REDHAT.ROOT)/src/build-boost-modules/$(NAME).module
 
 clean::
 	rm -rf $(SOURCE)

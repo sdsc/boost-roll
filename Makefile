@@ -67,22 +67,21 @@ default:
 	  export o=`echo $$i | sed 's/\.in//'`; \
 	  cp $$i $$o; \
 	  for c in $(ROLLCOMPILER); do \
-	    perl -pi -e 'print and s/ROLLCOMPILER/'$${c}'/g if m/ROLLCOMPILER/' $$o; \
+	    COMPILERNAME=`echo $$c | awk -F/ '{print $$1}'`; \
+	    perl -pi -e "print and s/COMPILERNAME/$${COMPILERNAME}/g if m/COMPILERNAME/" $$o; \
 	  done; \
-	  perl -pi -e '$$_ = "" if m/ROLLCOMPILER/' $$o; \
+	  perl -pi -e '$$_ = "" if m/COMPILERNAME/' $$o; \
 	done
 	$(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" roll
 
 clean::
 	rm -f _arch bootstrap.py
 
-cvsclean: clean
+distclean: clean
 	for i in `ls nodes/*.in`; do \
 	  export o=`echo $$i | sed 's/\.in//'`; \
 	  rm -f $$o; \
 	done
 	rm -fr RPMS SRPMS src/build-*
-
-distclean:: clean cvsclean
 	-rm -f _arch build.log
 	-rm -rf RPMS SRPMS
