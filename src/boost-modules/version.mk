@@ -1,6 +1,6 @@
 ifndef ROLLCOMPILER
   COMPILERNAME = gnu
-fi
+endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
 NAME    	:= boost-modules_$(COMPILERNAME)
