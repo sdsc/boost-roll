@@ -14,7 +14,7 @@ my $output;
 
 my $TESTFILE = 'rollboost';
 
-my @COMPILERS = split(/\s+/, 'intel');
+my @COMPILERS = split(/\s+/, 'ROLLCOMPILER');
 
 # boost-common.xml
 foreach my $compiler (@COMPILERS) {
@@ -26,7 +26,7 @@ foreach my $compiler (@COMPILERS) {
   }
 }
 
-# TODO: testing whether installed boost works
+# TODO: test whether installed boost works
 
 SKIP: {
 
