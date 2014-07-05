@@ -54,8 +54,6 @@
 # @Copyright@
 #
 
-SRCDIRS = `find . -maxdepth 1 -type d \
+SRCDIRS = `find . -type d -maxdepth 1 \
 	-not -name CVS \
-        -not -name boost \
-        -not -name boost-modules \
-	-not -name .` boost boost-modules
+	-not -name .`
