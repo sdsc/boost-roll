@@ -1,8 +1,7 @@
 ifndef ROLLCOMPILER
   COMPILERNAME = gnu
-else
-  COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
-endif
+fi
+COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
 NAME    	:= boost-modules_$(COMPILERNAME)
 VERSION 	= 1.54.0
