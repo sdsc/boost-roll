@@ -79,7 +79,7 @@ In addition to the software itself, the roll installs boost environment
 module files in:
 
 ```shell
-/opt/modulefiles/applications/boost
+/opt/modulefiles/applications/.$(ROLLCOMPILER)/boost
 ```
 
 
