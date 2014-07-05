@@ -65,7 +65,7 @@ include pull.mk
 COMPILERSETUP = \
   if test -e /etc/profile.d/modules.sh; then \
     . /etc/profile.d/modules.sh; \
-    module=`module avail 2>&1 | grep -o "\<$(ROLLCOMPILER)\>"`; \
+    module=`module avail 2>&1 | grep -o -m1 "\<$(ROLLCOMPILER)\>"`; \
     if test "$${module}" != "$(ROLLCOMPILER)"; then \
       echo *** ERROR: Compiler $(ROLLCOMPILER) not found; \
       exit 2; \
@@ -75,9 +75,9 @@ COMPILERSETUP = \
 
 TOOLSET = gcc
 ifeq ("$(COMPILERNAME)", "intel")
-   TOOLSET = intel-linux
+  TOOLSET = intel-linux
 else ifeq ("$(COMPILERNAME)", "pgi")
-   TOOLSET = pgi
+  TOOLSET = pgi
 endif
 
 build: $(SRC_DIRS)
