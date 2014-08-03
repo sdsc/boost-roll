@@ -4,8 +4,8 @@ endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
 NAME    := boost_$(COMPILERNAME)
-VERSION = 1.54.0
-RELEASE = 2
+VERSION = 1.55.0
+RELEASE = 0
 RPM.EXTRAS = "AutoReq: no"
 
 SRC_SUBDIR	= boost
