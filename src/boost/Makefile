@@ -82,7 +82,6 @@ endif
 
 build: $(SRC_DIRS)
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
-	tar zxvf $(SOURCE).tar.gz
 	( \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
