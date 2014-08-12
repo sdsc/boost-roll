@@ -12,9 +12,42 @@ my $installedOnAppliancesPattern = '.';
 my $isInstalled = -d '/opt/boost';
 my $output;
 
-my $TESTFILE = 'rollboost';
-
 my @COMPILERS = split(/\s+/, 'ROLLCOMPILER');
+my %CPLUSPLUS = ('gnu' => 'g++', 'intel' => 'icpc', 'pgi' => 'pgCC');
+
+my $TESTFILE = 'tmpboost';
+
+# Adapted from http://programmingexamples.net/wiki/CPP/Boost/Numeric/Matrix
+open(OUT, ">$TESTFILE.cxx");
+print OUT <<END;
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/io.hpp>
+ 
+int main () {
+  using namespace boost::numeric::ublas;
+  matrix<double> m (3, 3);
+  for (unsigned i = 0; i < m.size1 (); ++ i) {
+    for (unsigned j = 0; j < m.size2 (); ++ j) {
+      m (i, j) = 3 * i + j;
+    }
+  }
+  std::cout << m << std::endl;
+  return 0;
+}
+END
+close(OUT);
+
+open(OUT, ">$TESTFILE.sh");
+print OUT <<END;
+#!/bin/bash
+if test -f /etc/profile.d/modules.sh; then
+  . /etc/profile.d/modules.sh
+  module load \$1 boost
+fi
+\$2 -I /opt/boost/\$1/include -o $TESTFILE.exe $TESTFILE.cxx
+./$TESTFILE.exe
+END
+close(OUT);
 
 # boost-common.xml
 foreach my $compiler (@COMPILERS) {
@@ -26,7 +59,15 @@ foreach my $compiler (@COMPILERS) {
   }
 }
 
-# TODO: test whether installed boost works
+foreach my $compiler (@COMPILERS) {
+  my $compilername = (split('/', $compiler))[0];
+  skip "boost/$compilername not installed", 2
+    if ! -e "/opt/boost/$compilername";
+  `/bin/rm -f $TESTFILE.exe`;
+  $output = `/bin/bash $TESTFILE.sh $compilername $CPLUSPLUS{$compilername} 2>&1`;
+  ok(-e "$TESTFILE.exe", "boost/$compiler compilation");
+  like($output, qr/0,1,2/, "boost/$compiler run");
+}
 
 SKIP: {
 
