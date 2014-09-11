@@ -1,5 +1,5 @@
-NAME	= boost-roll-test
-VERSION	= 1
-RELEASE	= 2
+NAME       = boost-roll-test
+VERSION    = 1
+RELEASE    = 2
 
-RPM.EXTRAS         = AutoReq:No
+RPM.EXTRAS = AutoReq:No

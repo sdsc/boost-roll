@@ -54,8 +54,6 @@
 # @Copyright@
 
 
-PKGROOT = /opt/boost/$(COMPILERNAME)
-SOURCE = $(BOOST_NAME)-$(BOOST_VERSION)
 REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 
@@ -88,16 +86,16 @@ build: $(SRC_DIRS)
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
 	( \
 	  $(COMPILERSETUP); \
-	  cd $(SOURCE); \
+	  cd $(SOURCE_DIR); \
 	  ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET) \
 	)
 
 install::
 	( \
 	  $(COMPILERSETUP); \
-	  cd $(SOURCE); \
+	  cd $(SOURCE_DIR); \
 	  ./b2 install \
 	)
 
 clean::
-	rm -rf $(SOURCE)
+	rm -rf $(SOURCE_DIR)

@@ -3,16 +3,19 @@ ifndef ROLLCOMPILER
 endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
-NAME    := boost_$(COMPILERNAME)
-VERSION = 1.55.0
-RELEASE = 0
-RPM.EXTRAS = "AutoReq: no"
+NAME           = boost_$(COMPILERNAME)
+VERSION        = 1.55.0
+RELEASE        = 1
+PKGROOT        = /opt/boost/$(COMPILERNAME)
 
-SRC_SUBDIR	= boost
+SRC_SUBDIR     = boost
 
-BOOST_NAME	= boost
-BOOST_VERSION	= $(VERSION)
-BOOST_SOURCE	= $(BOOST_NAME)-$(BOOST_VERSION).tar.gz
+SOURCE_NAME    = boost
+SOURCE_SUFFIX  = tar.gz
+SOURCE_VERSION = $(VERSION)
+SOURCE_PKG     = $(SOURCE_NAME)-$(SOURCE_VERSION).$(SOURCE_SUFFIX)
+SOURCE_DIR     = $(SOURCE_PKG:%.$(SOURCE_SUFFIX)=%)
 
-TAR_GZ_PKGS	= $(BOOST_SOURCE)
+TAR_GZ_PKGS    = $(SOURCE_PKG)
 
+RPM.EXTRAS     = AutoReq:No
