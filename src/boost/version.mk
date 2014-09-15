@@ -5,7 +5,7 @@ COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
 NAME           = boost_$(COMPILERNAME)
 VERSION        = 1.55.0
-RELEASE        = 1
+RELEASE        = 2
 PKGROOT        = /opt/boost/$(COMPILERNAME)
 
 SRC_SUBDIR     = boost

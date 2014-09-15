@@ -40,10 +40,7 @@ close(OUT);
 open(OUT, ">$TESTFILE.sh");
 print OUT <<END;
 #!/bin/bash
-if test -f /etc/profile.d/modules.sh; then
-  . /etc/profile.d/modules.sh
-  module load \$1 boost
-fi
+module load \$1 boost
 \$2 -I /opt/boost/\$1/include -o $TESTFILE.exe $TESTFILE.cxx
 ./$TESTFILE.exe
 END
@@ -71,7 +68,6 @@ foreach my $compiler (@COMPILERS) {
 
 SKIP: {
 
-  skip 'modules not installed', $#COMPILERS if ! -f '/etc/profile.d/modules.sh';
   skip 'boost not installed', $#COMPILERS if ! $isInstalled;
   foreach my $compiler (@COMPILERS) {
     my $compilername = (split('/', $compiler))[0];
