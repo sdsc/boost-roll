@@ -3,11 +3,14 @@ ifndef ROLLCOMPILER
 endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
-NAME        = boost-modules_$(COMPILERNAME)
-RELEASE     = 1
-PKGROOT     = /opt/modulefiles/applications/.$(COMPILERNAME)/boost
+PACKAGE     = boost
+CATEGORY    = applications
 
-VERSION_SRC = $(REDHAT.ROOT)/src/boost/version.mk
+NAME        = $(PACKAGE)-modules_$(COMPILERNAME)
+RELEASE     = 2
+PKGROOT     = /opt/modulefiles/$(CATEGORY)/.$(COMPILERNAME)/$(PACKAGE)
+
+VERSION_SRC = $(REDHAT.ROOT)/src/$(PACKAGE)/version.mk
 VERSION_INC = version.inc
 include $(VERSION_INC)
 
