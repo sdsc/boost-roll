@@ -7,7 +7,7 @@ PACKAGE     = boost
 CATEGORY    = applications
 
 NAME        = $(PACKAGE)-modules_$(COMPILERNAME)
-RELEASE     = 2
+RELEASE     = 3
 PKGROOT     = /opt/modulefiles/$(CATEGORY)/.$(COMPILERNAME)/$(PACKAGE)
 
 VERSION_SRC = $(REDHAT.ROOT)/src/$(PACKAGE)/version.mk
