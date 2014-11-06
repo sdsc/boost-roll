@@ -1,6 +1,6 @@
-NAME       = boost-roll-test
+NAME       = sdsc-boost-roll-test
 VERSION    = 1
-RELEASE    = 3
+RELEASE    = 4
 PKGROOT    = /root/rolltests
 
 RPM.EXTRAS = AutoReq:No

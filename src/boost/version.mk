@@ -3,9 +3,9 @@ ifndef ROLLCOMPILER
 endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
-NAME           = boost_$(COMPILERNAME)
+NAME           = sdsc-boost_$(COMPILERNAME)
 VERSION        = 1.55.0
-RELEASE        = 2
+RELEASE        = 3
 PKGROOT        = /opt/boost/$(COMPILERNAME)
 
 SRC_SUBDIR     = boost

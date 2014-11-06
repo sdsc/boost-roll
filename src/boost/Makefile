@@ -58,19 +58,8 @@ REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 
 -include $(ROCKSROOT)/etc/Rules.mk
-include pull.mk
-
-CC = gcc
-ifeq ("$(COMPILERNAME)", "intel")
-  CC = icc
-else ifeq ("$(COMPILERNAME)", "pgi")
-  CC = pgcc
-endif
-
-COMPILERSETUP = \
-  module load $(ROLLCOMPILER) || true; \
-  echo === Compiler and version ===; \
-  $(CC) --version
+include $(SDSCDEVEL)/Pull.mk
+include $(SDSCDEVEL)/Rules.mk
 
 TOOLSET = gcc
 ifeq ("$(COMPILERNAME)", "intel")
@@ -79,20 +68,39 @@ else ifeq ("$(COMPILERNAME)", "pgi")
   TOOLSET = pgi
 endif
 
-build: $(SRC_DIRS)
-	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
+LICENSE_FILES = $(SOURCE_DIR)/LICENSE_1_0.txt
+
+$(NAME).spec: DESCRIPTION LICENSE
+
+DESCRIPTION:
+	$(MODULE_LOAD_CC); \
 	( \
-	  $(COMPILERSETUP); \
+	  $(DESCRIBE_PKG); \
+	  $(DESCRIBE_CC); \
+	  $(DESCRIBE_MPI); \
+	  $(DESCRIBE_BOOST) \
+	) > $@
+
+LICENSE: $(SRC_DIRS)
+	if ! grep -q 'Boost Software License' $(LICENSE_FILES); then \
+	  exit 2; \
+	fi
+	echo 'Boost Software License' > $@
+
+build: $(SRC_DIRS)
+	( \
+	  $(MODULE_LOAD_CC); \
 	  cd $(SOURCE_DIR); \
 	  ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET) \
 	)
 
 install::
+	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
 	( \
-	  $(COMPILERSETUP); \
+	  $(MODULE_LOAD_CC); \
 	  cd $(SOURCE_DIR); \
 	  ./b2 install \
 	)
 
 clean::
-	rm -rf $(SOURCE_DIR)
+	rm -rf $(SOURCE_DIR) DESCRIPTION LICENSE
