@@ -25,19 +25,17 @@ None.
 
 ## Building
 
-To build the boost-roll, execute these instructions on a Rocks development
+To build the boost-roll, execute this on a Rocks development
 machine (e.g., a frontend or development appliance):
 
 ```shell
-% make default 2>&1 | tee build.log
-% grep "RPM build error" build.log
+% make 2>&1 | tee build.log
 ```
 
-If nothing is returned from the grep command then the roll should have been
-created as... `boost-*.iso`. If you built the roll on a Rocks frontend then
-proceed to the installation step. If you built the roll on a Rocks development
-appliance you need to copy the roll to your Rocks frontend before continuing
-with installation.
+A successful build will create the file `boost-*.disk1.iso`.  If you built the
+roll on a Rocks frontend, proceed to the installation step. If you built the
+roll on a Rocks development appliance, you need to copy the roll to your Rocks
+frontend before continuing with installation.
 
 This roll source supports building with different compilers; by default, it
 builds using the gnu compilers.  To build for a different configuration, use
@@ -48,20 +46,8 @@ the `ROLLCOMPILER` make variable, e.g.,
 ```
 
 The build process currently supports one or more of the values "intel", "pgi",
-and "gnu" for the `ROLLCOMPILER` variable, defaulting to "gnu".  The build
-process uses the ROLLCOMPILER value to load an environment module, so you can
-also use it to specify a particular compiler version, e.g.,
+and "gnu" for the `ROLLCOMPILER` variable, defaulting to "gnu".
 
-```shell
-% make ROLLCOMPILER=gnu/4.8.1
-```
-
-The `ROLLCOMPILER` value is incorporated into the name of the produced rpm, e.g.,
-
-```shell
-make ROLLCOMPILER=intel
-```
-produces an rpm with a name that begins "`boost_intel`".
 
 ## Installation
 
@@ -86,7 +72,7 @@ module files in:
 ## Testing
 
 The boost-roll includes a test script which can be run to verify proper
-installation of the boost-roll binaries and module files. To run the test
+installation of the roll binaries and module files. To run the test
 scripts execute the following command(s):
 
 ```shell
