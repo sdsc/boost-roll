@@ -68,8 +68,6 @@ else ifeq ("$(COMPILERNAME)", "pgi")
   TOOLSET = pgi
 endif
 
-LICENSE_FILES = $(SOURCE_DIR)/LICENSE_1_0.txt
-
 $(NAME).spec: DESCRIPTION LICENSE
 
 DESCRIPTION:
@@ -82,9 +80,7 @@ DESCRIPTION:
 	) > $@
 
 LICENSE: $(SRC_DIRS)
-	if ! grep -q 'Boost Software License' $(LICENSE_FILES); then \
-	  exit 2; \
-	fi
+	$(CHECK_LICENSE_FILES)
 	echo 'Boost Software License' > $@
 
 build: $(SRC_DIRS)
@@ -101,6 +97,7 @@ install::
 	  cd $(SOURCE_DIR); \
 	  ./b2 install \
 	)
+	$(INSTALL_LICENSE_FILES)
 
 clean::
 	rm -rf $(SOURCE_DIR) DESCRIPTION LICENSE
