@@ -3,5 +3,6 @@ module-whatis "boost portable C++ libraries"
 module-whatis "Compiler: ROLLCOMPILER"
 module-whatis "Version: VERSION"
 setenv BOOSTHOME /opt/boost/COMPILERNAME
+# Additional environment variable for cmake
 setenv BOOSTROOT /opt/boost/COMPILERNAME
 prepend-path LD_LIBRARY_PATH /opt/boost/COMPILERNAME/lib
