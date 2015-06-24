@@ -2,11 +2,12 @@ ifndef ROLLCOMPILER
   ROLLCOMPILER = gnu
 endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
+MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
-NAME           = sdsc-boost_$(COMPILERNAME)
+NAME           = sdsc-boost_$(COMPILERNAME)_$(MPINAME)
 VERSION        = 1.55.0
-RELEASE        = 3
-PKGROOT        = /opt/boost/$(COMPILERNAME)
+RELEASE        = 4
+PKGROOT        = /opt/boost/$(COMPILERNAME)/$(MPINAME)
 
 SRC_SUBDIR     = boost
 

@@ -13,6 +13,8 @@ my $isInstalled = -d '/opt/boost';
 my $output;
 
 my @COMPILERS = split(/\s+/, 'ROLLCOMPILER');
+my @MPIS = split(/\s+/, 'ROLLMPI');
+
 my %CPLUSPLUS = ('gnu' => 'g++', 'intel' => 'icpc', 'pgi' => 'pgCC');
 
 my $TESTFILE = 'tmpboost';
@@ -40,7 +42,7 @@ close(OUT);
 open(OUT, ">$TESTFILE.sh");
 print OUT <<END;
 #!/bin/bash
-module load \$1 boost
+module load \$1 \$2 boost
 \$2 -I /opt/boost/\$1/include -o $TESTFILE.exe $TESTFILE.cxx
 ./$TESTFILE.exe
 END
@@ -49,21 +51,25 @@ close(OUT);
 # boost-common.xml
 foreach my $compiler (@COMPILERS) {
   my $compilername = (split('/', $compiler))[0];
-  if($appliance =~ /$installedOnAppliancesPattern/) {
-    ok(-e "/opt/boost/$compilername", "boost $compiler installed");
-  } else {
-    ok(! -e "/opt/boost/$compilername", "boost $compiler not installed");
+  foreach my $mpi(@MPIS) {
+    if($appliance =~ /$installedOnAppliancesPattern/) {
+      ok(-e "/opt/boost/$compilername/$mpi", "boost $compiler installed");
+    } else {
+      ok(! -e "/opt/boost/$compilername/$mpi", "boost $compiler not installed");
+    }
   }
 }
 
 foreach my $compiler (@COMPILERS) {
   my $compilername = (split('/', $compiler))[0];
-  skip "boost/$compilername not installed", 2
-    if ! -e "/opt/boost/$compilername";
-  `/bin/rm -f $TESTFILE.exe`;
-  $output = `/bin/bash $TESTFILE.sh $compilername $CPLUSPLUS{$compilername} 2>&1`;
-  ok(-e "$TESTFILE.exe", "boost/$compiler compilation");
-  like($output, qr/0,1,2/, "boost/$compiler run");
+  foreach my $mpi(@MPIS) {
+     skip "boost/$compilername/$mpi not installed", 2
+     if ! -e "/opt/boost/$compilername/$mpi";
+     `/bin/rm -f $TESTFILE.exe`;
+     $output = `/bin/bash $TESTFILE.sh $compilername $CPLUSPLUS{$compilername} $mpi 2>&1`;
+     ok(-e "$TESTFILE.exe", "boost/$compiler/$mpi compilation");
+     like($output, qr/0,1,2/, "boost/$compiler/$mpi run");
+  }
 }
 
 SKIP: {
@@ -76,7 +82,7 @@ SKIP: {
     `/bin/ls /opt/modulefiles/applications/.$compilername/boost/.version.[0-9]* 2>&1`;
     ok($? == 0, "boost $compiler version module installed");
     ok(-l "/opt/modulefiles/applications/.$compilername/boost/.version",
-       "boost $compiler version module link created");
+    "boost $compiler version module link created");
   }
 
 }

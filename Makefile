@@ -3,11 +3,12 @@
 #
 # @Copyright@
 # 
-# 				Rocks(tm)
+# 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		        version 4.3 (Mars Hill)
+# 		         version 5.6 (Emerald Boa)
+# 		         version 6.1 (Emerald Boa)
 # 
-# Copyright (c) 2000 - 2011 The Regents of the University of California.
+# Copyright (c) 2000 - 2013 The Regents of the University of California.
 # All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -25,7 +26,7 @@
 # 3. All advertising and press materials, printed or electronic, mentioning
 # features or use of this software must display the following acknowledgement: 
 # 
-# 	"This product includes software developed by the Rocks(tm)
+# 	"This product includes software developed by the Rocks(r)
 # 	Cluster Group at the San Diego Supercomputer Center at the
 # 	University of California, San Diego and its contributors."
 # 
@@ -53,26 +54,34 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
 # @Copyright@
-#
 
 ifndef ROLLCOMPILER
   ROLLCOMPILER = gnu
 endif
 
+ifndef ROLLMPI
+  ROLLMPI = rocks-openmpi
+endif
+
+
 -include $(ROLLSROOT)/etc/Rolls.mk
+include Rolls.mk
 
 default:
-# Copy and substitute lines of nodes/*.in that reference ROLLCOMPILER,
 	for i in `ls nodes/*.in`; do \
 	  export o=`echo $$i | sed 's/\.in//'`; \
 	  cp $$i $$o; \
 	  for c in $(ROLLCOMPILER); do \
 	    COMPILERNAME=`echo $$c | awk -F/ '{print $$1}'`; \
-	    perl -pi -e "print and s/COMPILERNAME/$${COMPILERNAME}/g if m/COMPILERNAME/" $$o; \
+	    perl -pi -e "print and s/COMPILERNAME/$$COMPILERNAME/g if m/COMPILERNAME/" $$o; \
 	  done; \
-	  perl -pi -e '$$_ = "" if m/COMPILERNAME/' $$o; \
+	  for m in $(ROLLMPI); do \
+	    MPINAME=`echo $$m | awk -F/ '{print $$1}'`; \
+	    perl -pi -e "print and s/MPINAME/$$MPINAME/g if m/MPINAME/" $$o; \
+	  done; \
+	  perl -pi -e '$$_ = "" if m/COMPILERNAME|MPINAME/' $$o; \
 	done
-	$(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" roll
+	$(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" ROLLMPI="$(ROLLMPI)" roll
 
 clean::
 	rm -f _arch bootstrap.py
@@ -82,5 +91,5 @@ distclean: clean
 	  export o=`echo $$i | sed 's/\.in//'`; \
 	  rm -f $$o; \
 	done
-	-rm -rf RPMS SRPMS
+	rm -fr RPMS SRPMS cache
 	-rm -f build.log
