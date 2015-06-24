@@ -42,8 +42,8 @@ close(OUT);
 open(OUT, ">$TESTFILE.sh");
 print OUT <<END;
 #!/bin/bash
-module load \$1 \$2 boost
-\$2 -I /opt/boost/\$1/include -o $TESTFILE.exe $TESTFILE.cxx
+module load \$1 \$3 boost
+\$2 -I /opt/boost/\$1/\$3/include -o $TESTFILE.exe $TESTFILE.cxx
 ./$TESTFILE.exe
 END
 close(OUT);
