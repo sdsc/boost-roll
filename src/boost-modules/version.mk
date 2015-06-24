@@ -1,12 +1,16 @@
 ifndef ROLLCOMPILER
   COMPILERNAME = gnu
 endif
+ifndef ROLLMPI
+  MPINAME = rocks-openmpi
+endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
+MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
 PACKAGE     = boost
 CATEGORY    = applications
 
-NAME        = sdsc-$(PACKAGE)-modules_$(COMPILERNAME)
+NAME        = sdsc-$(PACKAGE)-modules_$(COMPILERNAME)_$(MPINAME)
 RELEASE     = 4
 PKGROOT     = /opt/modulefiles/$(CATEGORY)/.$(COMPILERNAME)/$(PACKAGE)
 
