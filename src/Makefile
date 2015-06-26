@@ -1,12 +1,14 @@
+#
 # $Id$
 #
 # @Copyright@
 # 
-# 				Rocks(tm)
+# 				Rocks(r)
 # 		         www.rocksclusters.org
-# 		        version 4.3 (Mars Hill)
+# 		         version 5.6 (Emerald Boa)
+# 		         version 6.1 (Emerald Boa)
 # 
-# Copyright (c) 2000 - 2011 The Regents of the University of California.
+# Copyright (c) 2000 - 2013 The Regents of the University of California.
 # All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -24,7 +26,7 @@
 # 3. All advertising and press materials, printed or electronic, mentioning
 # features or use of this software must display the following acknowledgement: 
 # 
-# 	"This product includes software developed by the Rocks(tm)
+# 	"This product includes software developed by the Rocks(r)
 # 	Cluster Group at the San Diego Supercomputer Center at the
 # 	University of California, San Diego and its contributors."
 # 
@@ -53,7 +55,7 @@
 # 
 # @Copyright@
 #
-#
+# $Log$
 #
 
 -include $(shell ${ROCKSROOT}/bin/arch).mk
@@ -63,14 +65,26 @@ default:
 	@echo "copyright|rpm|pkg|clean"
 
 copyright rpm pkg clean::
-	for i in $(SRCDIRS) ; do \
-	  grep -q ROLLCOMPILER $$i/version.mk; \
-	  if test $$? -eq 0; then \
+	for i in $(SRCDIRS); do \
+	  package=`echo $$i | sed 's/\.\///'`; \
+	  if test `grep -c "\<NAME.*COMPILER" $$i/version.mk` -gt 0; then \
 	    for c in $(ROLLCOMPILER); do \
-	           echo make $@ in $$i with ROLLCOMPILER=$$c; \
-	           (cd $$i && $(MAKE) ROLLCOMPILER=$$c $@) || exit 2; \
+	      grep -q ROLLMPI $$i/version.mk; \
+	      if test $$? -eq 0; then \
+	        for m in $(ROLLMPI); do \
+	          echo make $@ in $$i with ROLLCOMPILER=$$c ROLLMPI=$$m starting at `date +"%F %T"`; \
+	          (cd $$i && $(MAKE) ROLLCOMPILER=$$c ROLLMPI=$$m $@) || exit 2; \
+	          echo make $@ in $$i with ROLLCOMPILER=$$c ROLLMPI=$$m completed at `date +"%F %T"`; \
+	        done; \
+	      else \
+	        echo make $@ in $$i with ROLLCOMPILER=$$c ROLLMPI="$(ROLLMPI)" starting at `date +"%F %T"`; \
+	        (cd $$i && $(MAKE) ROLLCOMPILER=$$c ROLLMPI="$(ROLLMPI)" $@) || exit 2; \
+	        echo make $@ in $$i with ROLLCOMPILER=$$c ROLLMPI="$(ROLLMPI)" completed at `date +"%F %T"`; \
+	      fi; \
 	    done; \
 	  else \
-	    (cd $$i && $(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" $@) || exit 2; \
+	    echo make $@ in $$i with ROLLCOMPILER="$(ROLLCOMPILER)" ROLLMPI="$(ROLLMPI)" starting at `date +"%F %T"`; \
+	    (cd $$i && $(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" ROLLMPI="$(ROLLMPI)" $@) || exit 2; \
+	    echo make $@ in $$i with ROLLCOMPILER="$(ROLLCOMPILER)" ROLLMPI="$(ROLLMPI)" completed at `date +"%F %T"`; \
 	  fi; \
 	done
