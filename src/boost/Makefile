@@ -103,7 +103,7 @@ install::
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
 	  cd $(SOURCE_DIR); \
-	  ./b2 -a install \
+	  ./b2 cxxflags=-fPIC cflags=-fPIC -a install \
 	)
 	$(INSTALL_LICENSE_FILES)
 
