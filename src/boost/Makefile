@@ -66,8 +66,10 @@ include $(SDSCDEVEL)/Pull.mk
 include $(SDSCDEVEL)/Rules.mk
 
 TOOLSET = gcc
+CFLAGS = 
 ifeq ("$(COMPILERNAME)", "intel")
   TOOLSET = intel-linux
+  CFLAGS = -mcmodel=medium -shared-intel
 else ifeq ("$(COMPILERNAME)", "pgi")
   TOOLSET = pgi
 endif
@@ -103,7 +105,7 @@ install::
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
 	  cd $(SOURCE_DIR); \
-	  ./b2 cxxflags=-fPIC cflags=-fPIC -a install \
+	  ./b2 cxxflags="-fPIC $(CFLAGS)" cflags="-fPIC $(CFLAGS)" -a install \
 	)
 	$(INSTALL_LICENSE_FILES)
 
