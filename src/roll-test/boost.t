@@ -70,6 +70,10 @@ foreach my $compiler (@COMPILERS) {
      ok(-e "$TESTFILE.exe", "boost/$compiler/$mpi compilation");
      like($output, qr/0,1,2/, "boost/$compiler/$mpi run");
   }
+  $output = `module load $compiler boost; echo \$BOOSTHOME 2>&1`;
+  my $firstmpi = $MPIS[0];
+  $firstmpi =~ s#/.*##;
+  like($output, qr#/opt/boost/$compiler/$firstmpi#, 'boost modulefile defaults to first mpi');
 }
 
 SKIP: {
