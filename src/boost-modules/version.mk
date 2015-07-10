@@ -7,7 +7,7 @@ PACKAGE     = boost
 CATEGORY    = applications
 
 NAME        = sdsc-$(PACKAGE)-modules_$(COMPILERNAME)
-RELEASE     = 5
+RELEASE     = 6
 PKGROOT     = /opt/modulefiles/$(CATEGORY)/.$(COMPILERNAME)/$(PACKAGE)
 
 VERSION_SRC = $(REDHAT.ROOT)/src/$(PACKAGE)/version.mk
