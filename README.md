@@ -42,16 +42,18 @@ roll on a Rocks frontend, proceed to the installation step. If you built the
 roll on a Rocks development appliance, you need to copy the roll to your Rocks
 frontend before continuing with installation.
 
-This roll source supports building with different compilers; by default, it
-builds using the gnu compilers.  To build for a different configuration, use
-the `ROLLCOMPILER` make variable, e.g.,
+This roll source supports building with different compilers and for different
+MPI flavors.  The `ROLLCOMPILER` and `ROLLMPI` make variables can be used to
+specify the names of compiler and MPI modulefiles to use for building the
+software, e.g.,
 
 ```shell
-% make ROLLCOMPILER=intel
+make ROLLCOMPILER='gnu intel' ROLLMPI=mvapich2_ib 2>&1 | tee build.log
 ```
 
-The build process currently supports one or more of the values "intel", "pgi",
-and "gnu" for the `ROLLCOMPILER` variable, defaulting to "gnu".
+The build process recognizes "gnu", "intel" or "pgi" for the values for the
+`ROLLCOMPILER` variable; any MPI modulefile name may be used for the values of
+the `ROLLMPI` variable.  The default values are "gnu" and "rocks-openmpi".
 
 
 ## Installation
