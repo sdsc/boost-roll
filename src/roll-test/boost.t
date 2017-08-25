@@ -78,16 +78,13 @@ foreach my $compiler (@COMPILERS) {
 
 SKIP: {
 
-  skip 'boost not installed', $#COMPILERS if ! $isInstalled;
-  foreach my $compiler (@COMPILERS) {
-    my $compilername = (split('/', $compiler))[0];
-    `/bin/ls /opt/modulefiles/applications/.$compilername/boost/[0-9]* 2>&1`;
-    ok($? == 0, "boost $compiler module installed");
-    `/bin/ls /opt/modulefiles/applications/.$compilername/boost/.version.[0-9]* 2>&1`;
-    ok($? == 0, "boost $compiler version module installed");
-    ok(-l "/opt/modulefiles/applications/.$compilername/boost/.version",
-    "boost $compiler version module link created");
-  }
+  skip 'boost not installed', 3 if ! $isInstalled;
+  `/bin/ls /opt/modulefiles/applications/boost/[0-9]* 2>&1`;
+  ok($? == 0, "boost module installed");
+  `/bin/ls /opt/modulefiles/applications/boost/.version.[0-9]* 2>&1`;
+  ok($? == 0, "boost version module installed");
+  ok(-l "/opt/modulefiles/applications/boost/.version",
+     "boost version module link created");
 
 }
 
