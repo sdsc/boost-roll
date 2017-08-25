@@ -35,9 +35,9 @@ if { ! [info exists compiler] } {
 # when this modulefile was loaded or the one with the most-recently-loaded
 # module.  Default to first element of ROLLMPI if neither applies.
 set mpi [lindex $mpinames 0]
-if [info exists env(ATLASHOME)] {
+if [info exists env(BOOSTHOME)] {
   foreach {mpi} $mpinames {
-    if {[string first "/$mpi" $::env(ATLASHOME)] >= 0} {
+    if {[string first "/$mpi" $::env(BOOSTHOME)] >= 0} {
       break
     }
   }
