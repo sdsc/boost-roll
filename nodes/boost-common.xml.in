@@ -13,7 +13,7 @@ All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
 </copyright>
 
 <package>sdsc-boost_COMPILERNAME_MPINAME</package>
-<package>sdsc-boost-modules_COMPILERNAME</package>
+<package>sdsc-boost-modules</package>
 <package>sdsc-boost-roll-test</package>
 
 </kickstart>
