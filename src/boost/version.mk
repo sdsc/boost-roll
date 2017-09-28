@@ -6,7 +6,7 @@ MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
 NAME           = sdsc-boost_$(COMPILERNAME)_$(MPINAME)
 VERSION        = 1.55.0
-RELEASE        = 6
+RELEASE        = 7
 PKGROOT        = /opt/boost/$(COMPILERNAME)/$(MPINAME)
 
 SRC_SUBDIR     = boost
@@ -20,3 +20,4 @@ SOURCE_DIR     = $(SOURCE_PKG:%.$(SOURCE_SUFFIX)=%)
 TAR_GZ_PKGS    = $(SOURCE_PKG)
 
 RPM.EXTRAS     = AutoReq:No
+RPM.PREFIX     = $(PKGROOT)
