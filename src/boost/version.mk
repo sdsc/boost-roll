@@ -6,7 +6,7 @@ MPINAME := $(firstword $(subst /, ,$(ROLLMPI)))
 
 NAME           = sdsc-boost_$(COMPILERNAME)_$(MPINAME)
 VERSION        = 1.55.0
-RELEASE        = 7
+RELEASE        = 8
 PKGROOT        = /opt/boost/$(COMPILERNAME)/$(MPINAME)
 
 SRC_SUBDIR     = boost
@@ -19,5 +19,5 @@ SOURCE_DIR     = $(SOURCE_PKG:%.$(SOURCE_SUFFIX)=%)
 
 TAR_GZ_PKGS    = $(SOURCE_PKG)
 
-RPM.EXTRAS     = AutoReq:No
+RPM.EXTRAS     = "AutoProv:No\\nAutoReq:No\\n%define __os_install_post /usr/lib/rpm/brp-compress"
 RPM.PREFIX     = $(PKGROOT)
