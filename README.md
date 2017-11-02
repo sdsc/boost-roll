@@ -51,7 +51,7 @@ software, e.g.,
 make ROLLCOMPILER='gnu intel' ROLLMPI=mvapich2_ib 2>&1 | tee build.log
 ```
 
-The build process recognizes "gnu", "intel" or "pgi" for the values for the
+The build process recognizes "gnu", "intel", or "pgi" for the values for the
 `ROLLCOMPILER` variable; any MPI modulefile name may be used for the values of
 the `ROLLMPI` variable.  The default values are "gnu" and "rocks-openmpi".
 
@@ -72,7 +72,7 @@ Subsequent installs of compute and login nodes will then include the contents
 of the boost-roll.  To avoid cluttering the cluster frontend with unused
 software, the boost-roll is configured to install only on compute and
 login nodes. To force installation on your frontend, run this command after
-adding the boost-roll to your distro
+adding the boost-roll to your distro:
 
 ```shell
 % rocks run roll boost host=NAME | bash
