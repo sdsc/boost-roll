@@ -59,7 +59,7 @@ the `ROLLMPI` variable.  The default values are "gnu" and "rocks-openmpi".
 
 ## Installation
 
-To install, execute these instructions on a Rocks frontend:
+To install, first execute these instructions on a Rocks frontend:
 
 ```shell
 % rocks add roll *.iso
