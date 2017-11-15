@@ -58,7 +58,6 @@
 #
 
 REDHAT.ROOT = $(PWD)/../../
-RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include $(SDSCDEVEL)/Pull.mk
