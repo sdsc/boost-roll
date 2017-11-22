@@ -90,9 +90,9 @@ build: $(SRC_DIRS)
 	( \
 	  $(MODULE_LOAD_CC); \
 	  $(MODULE_LOAD_MPI); \
-          cp $(SOURCE_DIR)/tools/build/v2/user-config.jam . ; \
-          echo 'using mpi ;' >> user-config.jam; \
+          cp $(SOURCE_DIR)/tools/build/example/user-config.jam $(SOURCE_DIR); \
 	  cd $(SOURCE_DIR); \
+          echo 'using mpi ;' >> user-config.jam; \
 	  ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET) \
 	)
 
