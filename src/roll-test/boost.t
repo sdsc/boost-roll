@@ -73,7 +73,7 @@ foreach my $compiler (@COMPILERS) {
   $output = `module load $compiler boost; echo \$BOOSTHOME 2>&1`;
   my $firstmpi = $MPIS[0];
   $firstmpi =~ s#/.*##;
-  like($output, qr#/opt/boost/$compiler/$firstmpi#, 'boost modulefile defaults to first mpi');
+  like($output, qr#/opt/boost/$compilername/$firstmpi#, 'boost modulefile defaults to first mpi');
 }
 
 SKIP: {
