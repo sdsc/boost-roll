@@ -92,8 +92,8 @@ build: $(SRC_DIRS)
 	  $(MODULE_LOAD_MPI); \
           cp $(SOURCE_DIR)/tools/build/example/user-config.jam $(SOURCE_DIR); \
 	  cd $(SOURCE_DIR); \
-          echo 'using mpi ;' >> user-config.jam; \
-	  ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET) \
+	  ./bootstrap.sh --prefix=$(ROOT)/$(PKGROOT) --with-toolset=$(TOOLSET); \
+          echo 'using mpi : mpicxx ;' >> project-config.jam \
 	)
 
 install::
